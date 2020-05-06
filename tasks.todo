@@ -1,0 +1,12 @@
+TODO:
+    - Let the program take more than one ISBNs @critical
+    - Let the program take input from the command line @high
+    - Let the user choose in what language wants to search for editions
+    - Let the user choose the output format for the text @low
+    - Make a github repository with README, LICENCE
+
+FIX:
+    - Put the parameters of the request in data dictionaries
+    - Make it take advantage of the Paperback filter to decrease the number of editions
+    - Write the urls only once in the file so if the program runs again it does not rewrite the same urls
+    - Check the ISBN input from the user to be in the correct format (13 digits max)
