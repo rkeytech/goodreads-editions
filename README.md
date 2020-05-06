@@ -8,7 +8,7 @@ A python script for finding other editions of a book on Goodreads, based on its 
 
 The requiments for the script to run are in the `requirements.txt` file. You can install all the requirements at once with `pip install -r requirements`. Obviously, you need first to check that you've got the Python version 3.8 on your system and you've got pip installed. The program was built with these versions of the required libraries but maybe it'll work with versions greater than the required.
 
-#### <u>USAGE</u>
+#### <u>Usage</u>
 
 ```bash
 python3 gr-editions.py {ISBN or Name} {language} {output-file}

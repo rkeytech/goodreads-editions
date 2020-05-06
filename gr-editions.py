@@ -2,9 +2,30 @@ import requests
 from bs4 import BeautifulSoup as bs
 import re
 import time
+import os
 
-# CONSTANTS
-ISBN = '9780812505047'
+# Make the folder for the url files
+try:
+    os.mkdir('./urls_files')
+except Exception:
+    pass
+
+
+# Make the patterns that we'll need for filtering
+gr_ptrn = re.compile(r'[αεοιηυάέίόήύ]')
+ws_ptrn = re.compile(r'\s')
+isbn_ptrn = re.compile(r'\d{10}|\d{13}')
+
+
+def get_isbn():
+    while True:
+        isbn = input(
+                "Please enter a valid ISBN number(Only 10 or 13 digits):\n"
+                ).strip()
+        # Try to match the full string with the desired pattern
+        if re.fullmatch(isbn_ptrn, isbn):
+            return isbn
+        isbn = ''
 
 
 def get_page(base_url, data):
@@ -17,9 +38,9 @@ def get_page(base_url, data):
     return r
 
 
-def get_editions_details():
+def get_editions_details(isbn):
     # Create the search URL with the ISBN of the book
-    data = {'q': ISBN}
+    data = {'q': isbn}
     book_url = get_page("https://www.goodreads.com/search", data)
     # Parse the markup with Beautiful Soup
     soup = bs(book_url.text, 'lxml')
@@ -31,16 +52,12 @@ def get_editions_details():
     ed_num = ed_item.text.strip().split(' ')[-1].strip('()')
 
     # Return a tuple with all the informations
-    return ((ed_link, int(ed_num)))
+    return ((ed_link, int(ed_num), isbn))
 
 
 def get_editions_urls(ed_details):
     # Unpack the tuple with the informations about the editions
-    url, ed_num = ed_details
-
-    # Make the patterns that we'll need for filtering
-    gr_ptrn = re.compile(r"[αεοιηυάέίόήύ]")
-    ws_ptrn = re.compile(r'\s')
+    url, ed_num, isbn = ed_details
 
     # Navigate to all pages for books with more than 100 editions
     for page in range((ed_num//100) + 1):
@@ -56,7 +73,7 @@ def get_editions_urls(ed_details):
         editions = soup.find_all("div", class_="editionData")
 
         # Search for greek editions
-        with open(f"{ISBN}_urls.txt", 'a') as fp:
+        with open(f"urls_files/{isbn}_urls.txt", 'a') as fp:
             for book in editions:
                 item = book.find("a", class_="bookTitle")
                 # Look if this is an edition in the chosen language
@@ -71,4 +88,6 @@ def get_editions_urls(ed_details):
 
 
 if __name__ == "__main__":
-    get_editions_urls(get_editions_details())
+    isbn = get_isbn()
+    ed_details = get_editions_details(isbn)
+    get_editions_urls(ed_details)

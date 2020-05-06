@@ -10,3 +10,4 @@ FIX:
     - Make it take advantage of the Paperback filter to decrease the number of editions
     - Write the urls only once in the file so if the program runs again it does not rewrite the same urls
     - Check the ISBN input from the user to be in the correct format (13 digits max)
+    - Fix the checking condition so it'll be able to decide about an edition which contains numbers or latin characters
