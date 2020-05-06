@@ -4,11 +4,6 @@ import re
 import time
 import os
 
-# Make the folder for the url files
-try:
-    os.mkdir('./urls_files')
-except Exception:
-    pass
 
 
 # Make the patterns that we'll need for filtering
@@ -18,14 +13,19 @@ isbn_ptrn = re.compile(r'\d{10}|\d{13}')
 
 
 def get_isbn():
+    isbns = []
     while True:
         isbn = input(
-                "Please enter a valid ISBN number(Only 10 or 13 digits):\n"
+                "Please enter valid ISBN numbers(Only 10 or 13 digits)" +
+                "\nand press 'c' to continue:\n"
                 ).strip()
         # Try to match the full string with the desired pattern
         if re.fullmatch(isbn_ptrn, isbn):
-            return isbn
+            isbns.append(isbn)
+        if isbn == 'c':
+            break
         isbn = ''
+    return isbns
 
 
 def get_page(base_url, data):
@@ -34,7 +34,6 @@ def get_page(base_url, data):
     except Exception as e:
         r = None
         print(f"Server responded: {e}")
-
     return r
 
 
@@ -88,6 +87,16 @@ def get_editions_urls(ed_details):
 
 
 if __name__ == "__main__":
-    isbn = get_isbn()
-    ed_details = get_editions_details(isbn)
-    get_editions_urls(ed_details)
+    # Make the folder for the url files
+    try:
+        os.mkdir('./urls_files')
+    except Exception:
+        pass
+
+    # Get the ISBNs from the user
+    isbns = get_isbn()
+
+    # Check all the ISBNs
+    for isbn in isbns:
+        ed_details = get_editions_details(isbn)
+        get_editions_urls(ed_details)
