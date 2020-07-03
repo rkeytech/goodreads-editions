@@ -5,7 +5,6 @@ import time
 import os
 
 
-
 # Make the patterns that we'll need for filtering
 gr_ptrn = re.compile(r'[αεοιηυάέίόήύ]')
 ws_ptrn = re.compile(r'\s')
@@ -16,9 +15,9 @@ def get_isbn():
     isbns = []
     while True:
         isbn = input(
-                "Please enter valid ISBN numbers(Only 10 or 13 digits)" +
-                "\nand press 'c' to continue:\n"
-                ).strip()
+            "Please enter valid ISBN numbers(Only 10 or 13 digits)" +
+            "\nand press 'c' to continue:\n"
+        ).strip()
         # Try to match the full string with the desired pattern
         if re.fullmatch(isbn_ptrn, isbn):
             isbns.append(isbn)
@@ -59,7 +58,7 @@ def get_editions_urls(ed_details):
     url, ed_num, isbn = ed_details
 
     # Navigate to all pages for books with more than 100 editions
-    for page in range((ed_num//100) + 1):
+    for page in range((ed_num // 100) + 1):
         r = requests.get(url, params={
             'page': str(page + 1),
             'per_page': '100',

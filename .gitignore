@@ -144,5 +144,8 @@ cython_debug/
 # !.vscode/extensions.json
 *.code-workspace
 
+# Sublime text
+*.sublime-workspace
+
 # Local History for Visual Studio Code
 .history/
