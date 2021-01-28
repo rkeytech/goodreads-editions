@@ -6,7 +6,7 @@ chardet==3.0.4
 entrypoints==0.3
 flake8==3.7.9
 idna==2.9
-lxml==4.5.0
+lxml>=4.6.2
 mccabe==0.6.1
 pkg-resources==0.0.0
 pycodestyle==2.5.0
