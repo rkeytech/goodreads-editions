@@ -13,4 +13,4 @@ pycodestyle==2.5.0
 pyflakes==2.1.1
 requests==2.23.0
 soupsieve==2.0
-urllib3==1.26.5
+urllib3==1.26.18
